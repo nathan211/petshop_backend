@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
-const Brand = require('../models/Brand');
+const PetType = require('../models/PetType');
 
 router.post('/', async (req, res) => {
     const { name } = req.body;
 
-    const brand = new Brand({name});
+    const petType = new PetType({name});
 
     try {
-        const savedBrand = await brand.save();
-        res.send(savedBrand);
+        const savedPetType = await petType.save();
+        res.send(savedPetType);
     } catch (error) {
         console.log(error);
     }

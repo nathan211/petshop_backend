@@ -7,7 +7,7 @@ router.post('/', async (req, res) => {
     const {
         name,
         price,
-        image,
+        imageUrl,
         description,
         quantity,
         categoryId,
@@ -17,7 +17,7 @@ router.post('/', async (req, res) => {
     const product = new Product({
         name,
         price,
-        image,
+        imageUrl,
         description,
         quantity,
         categoryId,
