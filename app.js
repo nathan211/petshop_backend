@@ -15,6 +15,7 @@ mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedT
 })
 
 app.use(express.json());
+app.use(express.static('public'));
 app.use('/api/customers', customers);
 app.use('/api/auth', auth);
 app.use('/api/products', products);

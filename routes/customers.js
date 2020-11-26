@@ -7,10 +7,9 @@ const Customer = require('../models/Customer');
 router.get('/:id', async (req, res) => {
     try {
         const customer = await Customer.findById(req.params.id);
-        console.log(req.params.id);
         res.send(customer);
     } catch (ex) {
-        res.send(ex);
+        res.send({message: ex.message});
     }
 });
 
