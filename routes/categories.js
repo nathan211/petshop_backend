@@ -3,10 +3,19 @@ const router = express.Router();
 
 const Category = require('../models/Category');
 
-router.post('/', async (req, res) => {
-    const { name, petTypeId } = req.body;
+router.get('/', async (req, res) => {
+    try {
+        const categories = await Category.find();
+        res.send(categories);
+    } catch (ex) {
+        console.log({message: ex.message});
+    }
+});
 
-    const category = new Category({ name, petTypeId });
+router.post('/', async (req, res) => {
+    const { name, petTypeId, parentId } = req.body;
+
+    const category = new Category({ name, petTypeId, parentId });
 
     try {
         const savedCategory = await category.save();
