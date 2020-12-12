@@ -10,6 +10,8 @@ const petTypes = require('./routes/petTypes');
 const categories = require('./routes/categories');
 const brands = require('./routes/brands');
 const parentCategories = require('./routes/parentCategories');
+const orders = require('./routes/orders');
+const orderDetails = require('./routes/orderDetails');
 
 mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true }, () => {
     console.log('Connected to the DB!');
@@ -24,6 +26,8 @@ app.use('/api/pettypes', petTypes);
 app.use('/api/categories', categories);
 app.use('/api/brands', brands);
 app.use('/api/parentcategories', parentCategories);
+app.use('/api/orders', orders);
+app.use('/api/orderDetails', orderDetails);
 
 
 const port = process.env.PORT || 3000;

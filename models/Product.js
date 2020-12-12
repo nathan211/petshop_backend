@@ -21,6 +21,10 @@ const ProductSchema = mongoose.Schema({
         type: Number,
         required: true
     },
+    cartCounter: {
+        type: Number,
+        default: 1
+    },
     categoryId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category'

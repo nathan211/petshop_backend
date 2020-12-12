@@ -28,6 +28,7 @@ router.post('/', async (req, res) => {
         imageUrl,
         description,
         quantity,
+        cartCounter,
         categoryId,
         brandId,
     } = req.body;
@@ -38,6 +39,7 @@ router.post('/', async (req, res) => {
         imageUrl,
         description,
         quantity,
+        cartCounter,
         categoryId,
         brandId,
     });
@@ -46,7 +48,7 @@ router.post('/', async (req, res) => {
         const savedProduct = await product.save();
         res.send(savedProduct);
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
 });
 
