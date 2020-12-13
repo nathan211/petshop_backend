@@ -21,6 +21,15 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+router.get('/filterByCategory/:id', async (req, res) => {
+    try {
+        const products = await Product.find({ categoryId: req.params.id });
+        res.send(products);
+    } catch (ex) {
+        res.send({message: ex.message});
+    }
+});
+
 router.post('/', async (req, res) => {
     const {
         name,
