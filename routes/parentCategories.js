@@ -15,4 +15,13 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.get('/', async (req, res) => {
+    try {
+        const parentCategories = await ParentCategory.find();
+        res.send(parentCategories);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 module.exports = router;
