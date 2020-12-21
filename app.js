@@ -12,6 +12,7 @@ const brands = require('./routes/brands');
 const parentCategories = require('./routes/parentCategories');
 const orders = require('./routes/orders');
 const orderDetails = require('./routes/orderDetails');
+const bookings = require('./routes/bookings');
 
 mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true }, () => {
     console.log('Connected to the DB!');
@@ -28,6 +29,7 @@ app.use('/api/brands', brands);
 app.use('/api/parentcategories', parentCategories);
 app.use('/api/orders', orders);
 app.use('/api/orderDetails', orderDetails);
+app.use('/api/bookings', bookings);
 
 
 const port = process.env.PORT || 3000;
