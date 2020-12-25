@@ -8,7 +8,11 @@ const CategorySchema = mongoose.Schema({
     petTypeId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'PetType'
-    }
+    },
+    parentId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'ParentCategory'
+    },
 });
 
 module.exports = mongoose.model('Category', CategorySchema);

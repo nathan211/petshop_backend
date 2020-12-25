@@ -21,7 +21,18 @@ router.post('/', async (req, res) => {
         const savedCategory = await category.save();
         res.send(savedCategory);
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
+    }
+});
+
+router.get('/getCategoryByParentId/:id', async (req, res) => {
+    const parentId = req.params.id;
+
+    try {
+        const categories = await Category.find({ parentId });
+        res.send(categories);
+    } catch (error) {
+        console.log(error.message);
     }
 });
 
