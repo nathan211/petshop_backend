@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
         const savedOrder = await order.save();
         res.send(savedOrder);
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
     }
 
 });
@@ -27,8 +27,18 @@ router.get('/latestOrder/:id', async (req, res) => {
         const latestOrder = await Order.findOne({ customerId }).sort({createdDate: -1});
         res.send(latestOrder);
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
     }
-})
+});
+
+router.get('/getAllOrdersByCustomerId/:id', async (req, res) => {
+    try {
+        const customerId = req.params.id;
+        const orders = await Order.find({ customerId });
+        res.send(orders);
+    } catch (error) {
+        console.log(error.message);
+    }
+});
 
 module.exports = router;
