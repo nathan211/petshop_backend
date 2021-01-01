@@ -17,10 +17,19 @@ router.post('/', async (req, res) => {
 })
 
 router.post('/findSelectedDate', async (req, res) => {
-    const { selectedDate } =  req.body;
-
     try {
+        const { selectedDate } =  req.body;
+        
         const bookings = await Booking.find({ bookedDate: selectedDate });
+        res.send(bookings);
+    } catch (error) {
+        console.log(error.message);
+    }
+});
+
+router.get('/', async (req, res) => {
+    try {
+        const bookings = await Booking.find();
         res.send(bookings);
     } catch (error) {
         console.log(error.message);

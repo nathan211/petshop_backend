@@ -30,15 +30,15 @@ router.get('/:id', async (req, res) => {
     try {
         const orderId = req.params.id;
         const order = await Order.findById(orderId);
-        const orderDetails = await OrderDetails.find({ orderId });
+        const details = await OrderDetails.find({ orderId });
 
-        const details = [];
-        for(const item of orderDetails){
+        const orderDetails = [];
+        for(const item of details){
             const product = await Product.findById(item.productId);
-            details.push({product, amount: item.amount});
+            orderDetails.push({product, amount: item.amount});
         }
 
-        res.send({details, totalMoney: order.totalMoney});
+        res.send({orderDetails, totalMoney: order.totalMoney});
     } catch (error) {
         console.log(error.message);
     }

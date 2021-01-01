@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const Order = require('../models/Order');
+const OrderDetails = require('../models/OrderDetails');
 
 router.post('/', async (req, res) => {
     const { customerId, totalMoney } = req.body;
@@ -35,7 +36,20 @@ router.get('/getAllOrdersByCustomerId/:id', async (req, res) => {
     try {
         const customerId = req.params.id;
         const orders = await Order.find({ customerId });
-        res.send(orders);
+
+
+        const output = [];
+        for(const order of orders){
+            const orderDetails = await OrderDetails.find({ orderId: order._id });
+            console.log(orderDetails.length);
+            const orderClone = {
+                order,
+                cartCounter: orderDetails.length
+            };
+           output.push(orderClone);
+        }
+
+        res.send(output);
     } catch (error) {
         console.log(error.message);
     }
