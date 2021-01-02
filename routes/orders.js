@@ -37,11 +37,9 @@ router.get('/getAllOrdersByCustomerId/:id', async (req, res) => {
         const customerId = req.params.id;
         const orders = await Order.find({ customerId });
 
-
         const output = [];
         for(const order of orders){
             const orderDetails = await OrderDetails.find({ orderId: order._id });
-            console.log(orderDetails.length);
             const orderClone = {
                 order,
                 cartCounter: orderDetails.length

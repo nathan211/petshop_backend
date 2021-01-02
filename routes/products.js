@@ -12,6 +12,24 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/lowToHigh', async (req, res) => {
+    try {
+        const products = await Product.find().sort({ price: 1 });
+        res.send(products);
+    } catch (error) {
+        res.send(error.message);
+    }
+});
+
+router.get('/highToLow', async (req, res) => {
+    try {
+        const products = await Product.find().sort({ price: -1 });
+        res.send(products);
+    } catch (error) {
+        res.send(error.message);
+    }
+});
+
 router.get('/:id', async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
@@ -31,29 +49,29 @@ router.get('/filterByCategory/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const {
-        name,
-        price,
-        imageUrl,
-        description,
-        quantity,
-        cartCounter,
-        categoryId,
-        brandId,
-    } = req.body;
-
-    const product = new Product({
-        name,
-        price,
-        imageUrl,
-        description,
-        quantity,
-        cartCounter,
-        categoryId,
-        brandId,
-    });
-
     try {
+        const {
+            name,
+            price,
+            imageUrl,
+            description,
+            quantity,
+            cartCounter,
+            categoryId,
+            brandId,
+        } = req.body;
+    
+        const product = new Product({
+            name,
+            price,
+            imageUrl,
+            description,
+            quantity,
+            cartCounter,
+            categoryId,
+            brandId,
+        });
+
         const savedProduct = await product.save();
         res.send(savedProduct);
     } catch (error) {
