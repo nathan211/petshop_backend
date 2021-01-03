@@ -4,9 +4,9 @@ const router = express.Router();
 const Booking = require('../models/Booking');
 
 router.post('/', async (req, res) => {
-    const { bookedDate, bookedTime, totalMoney } = req.body;
+    const { bookedDate, bookedTime, comboId, totalMoney } = req.body;
 
-    const booking = new Booking({bookedDate, bookedTime, totalMoney});
+    const booking = new Booking({bookedDate, bookedTime, comboId, totalMoney});
 
     try {
         const savedBooking = await booking.save();

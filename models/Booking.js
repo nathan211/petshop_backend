@@ -13,6 +13,10 @@ const BookingSchema = mongoose.Schema({
         type: Number,
         required: true,
     },
+    comboId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Combo'
+    },
     totalMoney: {
         type: Number,
         required: true,

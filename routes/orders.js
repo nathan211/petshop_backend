@@ -21,14 +21,14 @@ router.post('/', async (req, res) => {
 
 });
 
-router.get('/latestOrder/:id', async (req, res) => {
-    const customerId = req.params.id;
-    
+router.get('/latestOrder/:id', async (req, res) => { 
     try {
+        const customerId = req.params.id;
+        
         const latestOrder = await Order.findOne({ customerId }).sort({createdDate: -1});
         res.send(latestOrder);
     } catch (error) {
-        console.log(error.message);
+        res.send(error.message);
     }
 });
 
