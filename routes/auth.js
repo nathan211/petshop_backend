@@ -17,8 +17,8 @@ router.post('/', async (req, res) => {
             "thisIsAPrivateKey"
         );  
         res.send(token);
-    } catch (ex) {
-        res.send({message: ex.message});
+    } catch (error) {
+        res.send(error.message);
     }
 });
 

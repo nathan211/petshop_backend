@@ -40,6 +40,42 @@ router.post('/register', async (req, res) => {
     } catch (ex) {
         res.send({message: ex.message});
     }
-})
+});
+
+
+router.post('/updateUserInformation', async (req, res) => {
+    try {
+        const { _id, fullName, address, phoneNumber, email } = req.body;
+
+        const customer = await Customer.findById(_id);
+
+        const newValues = { fullName, address, phoneNumber, email, };
+
+        const updatedCustomer = await Customer.updateOne(customer, newValues);
+
+        res.send(updatedCustomer);
+    } catch (error) {
+        res.send(error.message);
+    }
+});
+
+router.post('/changePassword', async (req, res) => {
+    try {
+        const { _id, oldPassword, newPassword } = req.body;
+
+        const customer = await Customer.findById(_id);
+
+        if(customer.password !==  oldPassword){
+            return res.status(500).send({ error: "Mật khẩu cũ không chính xác!" });;
+        }
+
+        const newValues = { password: newPassword };
+
+        const updatedCustomer = await Customer.updateOne(customer, newValues);
+        res.send(updatedCustomer);
+    } catch (error) {
+        res.send(error.message);
+    }
+});
 
 module.exports = router;
