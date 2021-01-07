@@ -13,6 +13,10 @@ const OrderSchema = mongoose.Schema({
     totalMoney: {
         type: Number,
         required: true,
+    },
+    status: {
+        type: Number,
+        required: true,
     }
 });
 

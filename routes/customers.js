@@ -67,12 +67,12 @@ router.post('/changePassword', async (req, res) => {
 
         if(customer.password !==  oldPassword){
             return res.status(500).send({ error: "Mật khẩu cũ không chính xác!" });;
+        } else {
+            const newValues = { password: newPassword };
+
+            const updatedCustomer = await Customer.updateOne(customer, newValues);
+            res.send(updatedCustomer);
         }
-
-        const newValues = { password: newPassword };
-
-        const updatedCustomer = await Customer.updateOne(customer, newValues);
-        res.send(updatedCustomer);
     } catch (error) {
         res.send(error.message);
     }

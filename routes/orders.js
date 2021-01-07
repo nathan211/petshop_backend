@@ -10,6 +10,7 @@ router.post('/', async (req, res) => {
     const order = new Order({
         customerId, 
         totalMoney,
+        status: 2
     });
 
     try {
@@ -35,7 +36,7 @@ router.get('/latestOrder/:id', async (req, res) => {
 router.get('/getAllOrdersByCustomerId/:id', async (req, res) => {
     try {
         const customerId = req.params.id;
-        const orders = await Order.find({ customerId });
+        const orders = await Order.find({ customerId }).sort({ createdDate: -1 });
 
         const output = [];
         for(const order of orders){
@@ -50,6 +51,42 @@ router.get('/getAllOrdersByCustomerId/:id', async (req, res) => {
         res.send(output);
     } catch (error) {
         console.log(error.message);
+    }
+});
+
+router.post('/getOrdersByStatus', async (req, res) => {
+    try {
+        const {customerId, status} = req.body;
+
+        const orders = await Order.find({ customerId, status }).sort({ createdDate: -1 });
+
+        const output = [];
+        for(const order of orders){
+            const orderDetails = await OrderDetails.find({ orderId: order._id });
+            const orderClone = {
+                order,
+                cartCounter: orderDetails.length
+            };
+           output.push(orderClone);
+        }
+
+        res.send(output);
+    } catch (error) {
+        res.send(error.message);
+    }
+});
+
+router.post('/cancelOrder', async (req, res) => {
+    try {
+        const { orderId } = req.body;
+        const order = await Order.findById(orderId);
+
+        const newValues = { status: 5 };
+
+        const updatedOrder = await Order.updateOne(order, newValues);
+        res.send(updatedOrder);
+    } catch (error) {
+        res.send(error.message);
     }
 });
 

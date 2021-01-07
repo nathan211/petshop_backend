@@ -29,7 +29,7 @@ router.post('/findSelectedDate', async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
-        const bookings = await Booking.find();
+        const bookings = await Booking.find().sort({ bookedDate: -1 });
         res.send(bookings);
     } catch (error) {
         console.log(error.message);
