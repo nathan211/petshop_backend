@@ -59,6 +59,22 @@ router.post('/updateUserInformation', async (req, res) => {
     }
 });
 
+router.post('/updateShippingInformation', async (req, res) => {
+    try {
+        const { _id, address, phoneNumber } = req.body;
+
+        const customer = await Customer.findById(_id);
+
+        const newValues = { address, phoneNumber, };
+
+        const updatedCustomer = await Customer.updateOne(customer, newValues);
+
+        res.send(updatedCustomer);
+    } catch (error) {
+        res.send(error.message);
+    }
+});
+
 router.post('/changePassword', async (req, res) => {
     try {
         const { _id, oldPassword, newPassword } = req.body;

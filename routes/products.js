@@ -3,12 +3,16 @@ const router = express.Router();
 
 const Product = require('../models/Product');
 
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
-        const products = await Product.find();
+        const { currentPage } = req.body;
+        let page = Number(currentPage) || 1;
+        const perPage = 5;
+
+        const products = await Product.find().skip(page * perPage - perPage).limit(perPage);
         res.send(products);
-    } catch (ex) {
-        res.send({message: ex.message});
+    } catch (error) {
+        res.send(error.message);
     }
 });
 
@@ -39,9 +43,13 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.get('/filterByCategory/:id', async (req, res) => {
+router.post('/filterByCategory', async (req, res) => {
     try {
-        const products = await Product.find({ categoryId: req.params.id });
+        const { categoryId, currentPage } = req.body;
+        let page = Number(currentPage) || 1;
+        const perPage = 2;
+
+        const products = await Product.find({ categoryId }).skip(page * perPage - perPage).limit(perPage);
         res.send(products);
     } catch (ex) {
         res.send({message: ex.message});
@@ -78,5 +86,16 @@ router.post('/', async (req, res) => {
         console.log(error);
     }
 });
+
+router.post('/search', async (req, res) => {
+    try {
+        const { searchTerm } = req.body;
+        
+        const products = await Product.find({ name: { $regex: new RegExp(searchTerm.toLowerCase(), "i") } })
+        res.send(products);
+    } catch (error) {
+        res.send(error.message);
+    }
+})
 
 module.exports = router;
