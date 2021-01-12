@@ -3,6 +3,7 @@ const router = express.Router();
 
 const Order = require('../models/Order');
 const OrderDetails = require('../models/OrderDetails');
+const Product = require('../models/Product');
 
 router.post('/', async (req, res) => {
     const { customerId, totalMoney } = req.body;
@@ -41,11 +42,17 @@ router.get('/getAllOrdersByCustomerId/:id', async (req, res) => {
         const output = [];
         for(const order of orders){
             const orderDetails = await OrderDetails.find({ orderId: order._id });
-            const orderClone = {
+
+            const product = await Product.findById(orderDetails[0].productId);
+
+            const imageUrl = product.imageUrl;
+
+            const orderTemp = {
                 order,
-                cartCounter: orderDetails.length
+                cartCounter: orderDetails.length,
+                imageUrl
             };
-           output.push(orderClone);
+           output.push(orderTemp);
         }
 
         res.send(output);
@@ -63,11 +70,17 @@ router.post('/getOrdersByStatus', async (req, res) => {
         const output = [];
         for(const order of orders){
             const orderDetails = await OrderDetails.find({ orderId: order._id });
-            const orderClone = {
+
+            const product = await Product.findById(orderDetails[0].productId);
+
+            const imageUrl = product.imageUrl;
+
+            const orderTemp = {
                 order,
-                cartCounter: orderDetails.length
+                cartCounter: orderDetails.length,
+                imageUrl,
             };
-           output.push(orderClone);
+           output.push(orderTemp);
         }
 
         res.send(output);

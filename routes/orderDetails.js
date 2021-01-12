@@ -32,6 +32,9 @@ router.get('/:id', async (req, res) => {
         const order = await Order.findById(orderId);
         const details = await OrderDetails.find({ orderId });
 
+
+        console.log(orderId);
+
         const orderDetails = [];
         for(const item of details){
             const product = await Product.findById(item.productId);
