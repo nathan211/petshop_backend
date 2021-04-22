@@ -1,1 +1,11 @@
-# petshop_backend
+## Installation
+
+```bash
+yarn
+```
+
+## Run
+
+```bash
+yarn start
+```
